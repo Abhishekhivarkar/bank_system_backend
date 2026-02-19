@@ -35,4 +35,11 @@ export const config = {
   TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
   TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
   TWILIO_WHATSAPP_FROM: process.env.TWILIO_WHATSAPP_FROM,
+
+  // nodemailer
+
+  CLIENT_ID: process.env.CLIENT_ID,
+  CLIENT_SECRET: process.env.CLIENT_SECRET,
+  REFRESH_TOKEN: process.env.REFRESH_TOKEN,
+  EMAIL_USER: process.env.EMAIL_USER
 };

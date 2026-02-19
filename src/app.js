@@ -1,12 +1,18 @@
+//imports
+
 import express from "express"
 import cookieParser from "cookie-parser"
 import authRoutes from "./routes/auth.route.js"
+import accountRoutes from "./routes/account.route.js"
 const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
 
-app.use("/api",authRoutes)
+// endpoints
+app.use("/api", authRoutes)
+app.use("/api", accountRoutes)
+
 
 app.use("/health",(_,res)=>{
   res.status(200).json({

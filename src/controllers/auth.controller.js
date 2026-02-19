@@ -2,6 +2,7 @@ import userModel from "../models/User.model.js"
 import bcryptjs from "bcryptjs"
 import {config} from "../configs/env.config.js"
 import jwt from "jsonwebtoken"
+import sendRegisterEmailToUser from "../services/email.service.js"
 export const register = async (req,res) =>{
   try{
     const {name,email,password} = req.body
@@ -22,16 +23,21 @@ export const register = async (req,res) =>{
       })
     }
     
-    await userModel.create({
+    const newUser = await userModel.create({
       name,
       email,
       password
     })
-    
+  
     res.json({
       success:true,
       message:"User register successfully"
     })
+
+    await sendRegisterEmailToUser(
+    newUser.name,
+  newUser.email
+  )
   }catch(err){
     console.log("USER REGISTER ERROR : ",err)
     res.status(500).json({
@@ -72,7 +78,7 @@ export const login =async (req,res) =>{
     }
     
     const token = jwt.sign(
-      {id:user._id},
+      {userId:user._id},
       config.JWT_SECRET,
       {"expiresIn":"15m"}
       )
