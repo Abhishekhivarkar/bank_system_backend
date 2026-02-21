@@ -23,6 +23,12 @@ export const userSchema = new mongoose.Schema({
     trim:true,
     minlength:[8,"Password length must be 8 characters long"],
     select:false
+  },
+  systemUser:{
+   type:Boolean,
+   default:false,
+   select:false,
+   immutable:true
   }
 },{timestamps:true})
 
