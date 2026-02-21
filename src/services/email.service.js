@@ -44,5 +44,30 @@ const sendEmail = async (to,  subject, text, html) => {
 
             await sendEmail(email, subject, text, html)
         }
+        
+        
+ export const sendTransactionSuccessMail = async ({email, name, amount, account}) => {
+  const subject = "Transaction Successful";
+
+  const text = `
+Hi ${name},
+
+Your transaction has been completed successfully.
+
+Amount: ₹${amount}
+Credited To Account: ${account}
+
+Thank you for using our banking service.
+
+Bank System Team
+`;
+
+  // nodemailer send example
+  await transporter.sendMail({
+    to: email,
+    subject,
+    text
+  });
+};
 
 export default sendRegisterEmailToUser
