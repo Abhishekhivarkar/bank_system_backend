@@ -3,6 +3,7 @@ import bcryptjs from "bcryptjs"
 import {config} from "../configs/env.config.js"
 import jwt from "jsonwebtoken"
 import sendRegisterEmailToUser from "../services/email.service.js"
+import blackListTokenModel from "../models/BlackListToken.model.js"
 export const register = async (req,res) =>{
   try{
     const {name,email,password} = req.body
@@ -98,3 +99,34 @@ export const login =async (req,res) =>{
     })
   }
 }
+
+
+export const logout= async (req, res) => {
+  try {
+const token = req.cookies?.token || req.headers.authorization?.split(" ")[1]
+    
+    if(!token){
+     return res.status(200).json({
+      success:true,
+      message:"Logout successfully!"
+     })
+    }
+
+res.cookie("token","")
+
+await blackListTokenModel.create({
+ token
+})
+
+res.status(200).json({
+ success:true,
+ message:"Logout successfully!"
+})
+  } catch (error) {
+    console.log("LOGOUT ERROR:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Logout failed"
+    });
+  }
+};
